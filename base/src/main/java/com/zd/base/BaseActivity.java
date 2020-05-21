@@ -5,9 +5,12 @@ import android.os.Bundle;
 import android.os.Looper;
 import android.os.MessageQueue;
 import android.view.InflateException;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,12 +27,13 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         try {
-            int layoutResID = initView(savedInstanceState);
+            int layoutResID = setLayoutId(savedInstanceState);
             if (layoutResID != 0) {
                 setContentView(layoutResID);
             }
+            initView(savedInstanceState);
             initDatas(savedInstanceState);
-            initEvents();
+            initEvents(savedInstanceState);
         } catch (Exception e) {
             if (e instanceof InflateException) {
                 throw e;
@@ -132,9 +136,15 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     /**
-     * 初始化监听事件
+     * 初始化 setLayoutId
      */
-    protected abstract int initView(Bundle savedInstanceState);
+    public abstract int setLayoutId(Bundle savedInstanceState);
+
+    /**
+     * 初始化 View
+     */
+    public void initView(Bundle savedInstanceState) {
+    }
 
     /**
      * 初始化监听事件
@@ -145,7 +155,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 初始化监听事件
      */
-    protected void initEvents() {
+    protected void initEvents(Bundle savedInstanceState) {
     }
 
     /**
